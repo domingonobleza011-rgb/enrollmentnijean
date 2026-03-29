@@ -10,7 +10,6 @@
     <table class="table table-hover text-center table-bordered" style="min-width: 1000px;"> 
         <thead class="alert-info">
             <tr>
-                <th> Student ID </th>
                 <th> LRN </th>
                 <th> Course </th>
                 <th> Full Name </th>
@@ -31,7 +30,6 @@
                 while($view = $stmnt->fetch()){
             ?>
                 <tr>
-                    <td> <?= $view['id_resident'];?> </td>
                     <td> <?= $view['lrn'];?> </td>
                     <td> <?= $view['course'];?> </td>  
                     <td> <?= $view['lname'];?>, <?= $view['fname'];?> <?= $view['mi'];?></td>
@@ -82,7 +80,6 @@
     <table class="table table-hover text-center table-bordered" style="min-width: 1000px;"> 
         <thead class="alert-info">
              <tr>
-                <th> Student ID </th>
                 <th> LRN </th>
                 <th> Course </th>
                 <th> Full Name </th>
@@ -97,7 +94,6 @@
     <?php if(is_array($view)) { ?>
         <?php foreach($view as $row) { ?>
         <tr>
-            <td> <?= $row['id_resident'];?> </td>
             <td> <?= $row['lrn'];?> </td>
             <td> <?= $row['course'];?> </td> 
             <td> <?= $row['lname'];?>, <?= $row['fname'];?> <?= $row['mi'];?></td>
@@ -118,7 +114,7 @@
                 <div class="modal fade" id="viewModal<?= $row['id_resident'] ?>" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
-                            <div class="modal-header bg-success text-white">
+                            <div class="modal-header bg-primary text-white">
                                 <h5 class="modal-title">Student Information</h5>
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                             </div>
@@ -126,7 +122,7 @@
                                 <p><strong>School Year:</strong> <?= $row['sy'] ?></p>
                                 <p><strong>Course:</strong> <?= $row['course'] ?></p>
                                 <p><strong>LRN:</strong> <?= $row['lrn'] ?></p>
-                                <hr style="border: 2px solid green; opacity: 1;">
+                                <hr style="border: 2px solid black; opacity: 1;">
                                 <h5> <strong>Personal Information</strong></h5>
                                 <p><strong>Full Name:</strong> <?= $row['lname'] ?>, <?= $row['fname'] ?> <?= $row['mi'] ?></p>
                                 <p><strong>Birthday:</strong> <?= $row['bdate'] ?></p>
@@ -135,21 +131,21 @@
                                 <p><strong>Email:</strong> <?= $row['email'] ?></p>
                                 <p><strong>Current Address:</strong> <?= $row['current_address'] ?></p>
                                 <p><strong>Permanent Address:</strong> <?= $row['perm_address'] ?></p>
-                                <hr style="border: 2px solid green; opacity: 1;">
+                                <hr style="border: 2px solid black; opacity: 1;">
                                 <h5><strong>Father's Information</strong></h5>
                                 <p><strong>Name:</strong> <?= $row['flname'] ?>, <?= $row['ffname'] ?> <?= $row['fmi'] ?></p>
                                 <p><strong>Contact:</strong> <?= $row['contact_f'] ?></p>
-                                <hr style="border: 2px solid green; opacity: 1;">
+                                <hr style="border: 2px solid black; opacity: 1;">
                                 <h5><strong>Mother's Name</strong></h5>
                                 <p><strong>Name:</strong> <?= $row['mlname'] ?>, <?= $row['mfname'] ?> <?= $row['mmi'] ?></p>
                                 <p><strong>Contact:</strong> <?= $row['contact_m'] ?></p>
-                                <hr style="border: 2px solid green; opacity: 1;">
+                                <hr style="border: 2px solid black; opacity: 1;">
                                 <h5><strong>For Returning Learner:</strong></h5>
                                 <p><strong>Last Grade Level Completed:</strong> <?= $row['lglc'] ?></p>
                                 <p><strong>Last School Attended:</strong> <?= $row['lsa'] ?></p>
                                 <p><strong>Last School Year Completed:</strong> <?= $row['lysc'] ?></p>
                                 <p><strong>School Id:</strong> <?= $row['school_id'] ?></p>
-                                <hr style="border: 2px solid green; opacity: 1;">
+                                <hr style="border: 2px solid black; opacity: 1;">
                             </div>
                         </div>
                     </div>

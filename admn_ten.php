@@ -53,7 +53,7 @@
                 <i class="fa fa-search icon"></i>
                 <input type="search" class="form-control" name="keyword" value="" required="" style="border-radius: 30px;"/>
             </div>
-                <button class="btn btn-success" name="search_nine" style="width: 90px; font-size: 17px; border-radius:30px; margin-left:41.5%;">
+                <button class="btn btn-success" name="search_ten" style="width: 90px; font-size: 17px; border-radius:30px; margin-left:41.5%;">
                     Search
                 </button>
                 <a href="admn_ten.php" class="btn btn-info" style="width: 90px; font-size: 17px; border-radius:30px;">Reload</a>

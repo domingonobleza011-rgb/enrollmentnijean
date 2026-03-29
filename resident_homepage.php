@@ -10,15 +10,6 @@
     $tm = new DateTime("now", new DateTimeZone('Asia/Manila'));
     $cdate = $dt->format('Y/m/d');
     $ctime = $tm->format('H');
-
-    // 2. Pass the ID to the delete/hide function
-    $eusebia->delete_announcement($current_user_id);
-
-    // 3. Fetch announcements filtered for this specific user
-    $view = $eusebia->view_active_announcements($current_user_id); 
-
-    // Optional: Only keep this if residents are allowed to create announcements
-    // $eusebia->create_announcement();
 ?>
 
 
@@ -46,6 +37,9 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> 
         <script src="https://kit.fontawesome.com/67a9b7069e.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Serif+4:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
 
         
 
@@ -289,52 +283,8 @@
                 </ul>
             </div>
         </nav>
+<br> <br> <br><br>
 
-<div class="container mt-4">
-    <?php 
-    // Fetching announcements from the database
-$view = $eusebia->view_active_announcements($userdetails['id_resident']); 
-    
-    if(is_array($view) && count($view) > 0): 
-        foreach($view as $announcement): ?>
-            <div class="alert alert-light border-start border-primary border-4 shadow-sm mb-3 position-relative" role="alert" style="border-radius: 8px;">
-                <div class="d-flex align-items-start p-1">
-                    <div class="bg-primary text-white rounded-circle p-2 me-3 d-flex align-items-center justify-content-center shadow-sm" style="width: 42px; height: 42px; flex-shrink: 0;">
-                        <i class="bi bi-megaphone-fill"></i>
-                    </div>
-                    
-                    <div class="flex-grow-1">
-                        <div class="d-flex justify-content-between align-items-center mb-1">
-                            <h6 class="fw-bold mb-0 text-primary text-uppercase" style="font-size: 0.75rem; letter-spacing: 0.5px;">
-                                Official Announcement
-                            </h6>
-                            <?php if(!isset($announcement['status']) || $announcement['status'] == 'unread'): ?>
-                                <span class="badge rounded-pill bg-info text-dark" style="font-size: 0.65rem;">New</span>
-                            <?php endif; ?>
-                        </div>
-                        
-                        <p class="text-dark mb-3" style="font-size: 0.95rem; line-height: 1.4;">
-                            <?= htmlspecialchars($announcement['event']); ?>
-                        </p>
-                        
-                        <div class="border-top pt-2">
-                            <form action="" method="POST">
-    <input type="hidden" name="id_announcement" value="<?= $announcement['id_announcement']; ?>">
-    <button type="submit" name="delete_announcement">Delete</button>
-</form>
-                        </div>
-                    </div>
-                </div>
-                <button type="button" class="btn-close position-absolute top-0 end-0 m-2" data-bs-dismiss="alert" aria-label="Close" style="font-size: 0.7rem;"></button>
-            </div>
-        <?php endforeach; 
-    else: ?>
-        <div class="text-center py-5 border rounded bg-light">
-            <i class="bi bi-inbox text-muted display-4"></i>
-            <p class="text-muted mt-2">No active announcements at this time.</p>
-        </div>
-    <?php endif; ?>
-</div>
   
 
         <div id="down1"></div>
@@ -351,7 +301,7 @@ $view = $eusebia->view_active_announcements($userdetails['id_resident']);
 
                         <div class="header"> 
                             <h2> Welcome to EUSEBIA PAZ ARROYO NATIONAL HIGH SCHOOL</h2><bR>
-                            <h3> You may select the following services offered below </h3>
+                            <h3> You may select your grade level below </h3>
                         </div>
                     </div>
                 </div>

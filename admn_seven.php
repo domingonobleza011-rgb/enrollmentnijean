@@ -58,10 +58,10 @@
                 <i class="fa fa-search icon"></i>
                 <input type="search" class="form-control" name="keyword" value="" required="" style="border-radius: 30px;"/>
             </div>
-                <button class="btn btn-success" name="search_certofres" style="width: 90px; font-size: 17px; border-radius:30px; margin-left:41.5%;">
+                <button class="btn btn-success" name="search_seven" style="width: 90px; font-size: 17px; border-radius:30px; margin-left:41.5%;">
                     Search
                 </button>
-                <a href="admn_certofres.php" class="btn btn-info" style="width: 90px; font-size: 17px; border-radius:30px;">Reload</a>
+                <a href="admn_seven.php" class="btn btn-info" style="width: 90px; font-size: 17px; border-radius:30px;">Reload</a>
             </form>
             <br>
         </div>

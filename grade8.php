@@ -369,10 +369,7 @@
         <nav class="navbar navbar-dark bg-primary sticky-top">
             <a class="navbar-brand" href="resident_homepage.php">EUSEBIA PAZ ARROYO NATIONAL HIGH SCHOOL </a>
             <a href="resident_homepage.php" data-toggle="tooltip" title="Home" class="btn1 bg-primary"><i class="fa fa-home fa-lg"></i></a>
-            <a href="#down3" data-toggle="tooltip" title="Procedure" class="btn5 bg-primary"><i class="fa fa-question fa-lg"></i></a>
-            <a href="#down2" data-toggle="tooltip" title="Information" class="btn4 bg-primary"><i class="fa fa-info fa-lg"></i></a>
-            <a href="#down1" data-toggle="tooltip" title="Registration" class="btn3 bg-primary"><i class="fa fa-edit fa-lg"></i></a>
-            <a href="#down" data-toggle="tooltip" title="Contact" class="btn2 bg-primary"><i class="fa fa-phone fa-lg"></i></a>
+            
            
             <div class="dropdown ml-auto">
                 <button title="Your Account" class="btn btn-primary dropdown-toggle" style="margin-right: 2px;" type="button" data-toggle="dropdown"><?= $userdetails['surname'];?>, <?= $userdetails['firstname'];?>
@@ -602,19 +599,19 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Last Name:</label>
-                                <input name="lname" type="text" class="form-control" value="<?= $userdetails['surname'] ?? ''; ?>" required>
+                                <input name="lname" type="text" class="form-control" required>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>First Name:</label>
-                                <input name="fname" type="text" class="form-control" value="<?= $userdetails['firstname'] ?? ''; ?>" required>
+                                <input name="fname" type="text" class="form-control" required>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Middle Name:</label>
-                                <input name="mi" type="text" class="form-control" value="<?= $userdetails['mname'] ?? ''; ?>">
+                                <input name="mi" type="text" class="form-control" required>
                             </div>
                         </div>
                     </div>
@@ -645,13 +642,13 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Contact:</label>
-                                <input name="contact" type="number" class="form-control" value="<?= $userdetails['contact'] ?? ''; ?>" required>
+                                <input name="contact" type="number" class="form-control" required>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Email:</label>
-                                <input name="email" type="text" class="form-control" value="<?= $userdetails['email'] ?? ''; ?>" required>
+                                <input name="email" type="text" class="form-control" required>
                             </div>
                         </div>
                     </div>

@@ -1,9 +1,59 @@
 <?php
+    
+   error_reporting(E_ALL ^ E_WARNING);
+   ini_set('display_errors',0);
+   require('classes/resident.class.php');
+   $userdetails = $residenteusebia->get_userdata();
+   $residenteusebia->validate_admin();
+   $view = $residenteusebia->view_twelve_ict();
+   
+?>
+
+<?php 
+    include('dashboard_sidebar_start.php');
+?>
+<style>
+    .input-icons i {
+        position: absolute;
+    }
+        
+    .input-icons {
+        width: 30%;
+        margin-bottom: 10px;
+        margin-left: 34%;
+    }
+        
+    .icon {
+        padding: 10px;
+        min-width: 40px;
+    }
+    .form-control{
+        text-align: center;
+    }
+</style>
+
+<!-- Begin Page Content -->
+
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+
+    <div class="row"> 
+        <div class="col text-center"> 
+            <h1> ICT Table</h1>
+        </div>
+    </div>
+
+    <hr>
+    <br><br>
+    <div class="row"> 
+        <div class="col"> 
+            <?php
     // require the database connection
     require 'classes/conn.php';
     
     // Updated trigger to search_nine
-    if(isset($_POST['search_eight'])){
+    if(isset($_POST['search_eleven'])){
         $keyword = $_POST['keyword'];
 ?>
 <div class="table-responsive" style="width: 100%; overflow-x: auto;">
@@ -11,6 +61,7 @@
         <thead class="alert-info">
             <tr>
                 <th> LRN </th>
+                <th> Course </th>
                 <th> Full Name </th>
                 <th> Birthday</th>
                 <th> Age </th>
@@ -21,8 +72,8 @@
         </thead>
         <tbody>    
             <?php
-                // Target tbl_eight for Grade 8 records
-                $stmnt = $conn->prepare("SELECT * FROM `tbl_eight` WHERE `lname` LIKE '%$keyword%' or `fname` LIKE '%$keyword%' 
+                // Target tbl_nine for Grade 9 records
+                $stmnt = $conn->prepare("SELECT * FROM `tbl_eleven` WHERE `lname` LIKE '%$keyword%' or `fname` LIKE '%$keyword%' 
                 or `id_resident` LIKE '%$keyword%' or `lrn` LIKE '%$keyword%'");
                 $stmnt->execute();
                 
@@ -30,6 +81,7 @@
             ?>
                 <tr>
                     <td> <?= $view['lrn'];?> </td>
+                    <td> <?= $view['course'];?> </td>  
                     <td> <?= $view['lname'];?>, <?= $view['fname'];?> <?= $view['mi'];?></td>
                     <td> <?= $view['bdate'];?> </td>
                     <td> <?= $view['age'];?> </td>
@@ -40,8 +92,8 @@
                             <i class="fa fa-eye"></i> View
                         </button>
                         <form action="" method="post" style="display:inline;">
-                            <input type="hidden" name="id_eight" value="<?= $view['id_eight'];?>">
-                            <button class="btn btn-danger" type="submit" style="width: 90px; font-size: 17px; border-radius:30px;" name="delete_eight"> Archive </button>
+                            <input type="hidden" name="id_eleven" value="<?= $view['id_eleven'];?>">
+                            <button class="btn btn-danger" type="submit" style="width: 90px; font-size: 17px; border-radius:30px;" name="delete_eleven"> Archive </button>
                         </form>
                     </td>
                 </tr>
@@ -79,6 +131,7 @@
         <thead class="alert-info">
              <tr>
                 <th> LRN </th>
+                <th> Course </th>
                 <th> Full Name </th>
                 <th> Birthday</th>
                 <th> Age </th>
@@ -92,19 +145,20 @@
         <?php foreach($view as $row) { ?>
         <tr>
             <td> <?= $row['lrn'];?> </td>
+            <td> <?= $row['course'];?> </td> 
             <td> <?= $row['lname'];?>, <?= $row['fname'];?> <?= $row['mi'];?></td>
             <td> <?= $row['bdate'];?> </td>
             <td> <?= $row['age'];?> </td>
             <td> <?= $row['contact'];?> </td>
             <td> <?= $row['email'];?> </td>
-                <td>    
+            <td>    
                 <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#viewModal<?= $row['id_resident'] ?>">
                     <i class="fa fa-eye"></i> View
                 </button>
                 
                 <form action="" method="post" style="display:inline;">
-                    <input type="hidden" name="id_eight" value="<?= $row['id_eight'];?>">
-                    <button class="btn btn-danger" type="submit" name="delete_eight"> Archive </button>
+                    <input type="hidden" name="id_eleven" value="<?= $row['id_eleven'];?>">
+                    <button class="btn btn-danger" type="submit" name="delete_eleven"> Archive </button>
                 </form>
 
                 <div class="modal fade" id="viewModal<?= $row['id_resident'] ?>" tabindex="-1" role="dialog" aria-hidden="true">
@@ -116,6 +170,7 @@
                             </div>
                             <div class="modal-body text-left">
                                 <p><strong>School Year:</strong> <?= $row['sy'] ?></p>
+                                <p><strong>Course:</strong> <?= $row['course'] ?></p>
                                 <p><strong>LRN:</strong> <?= $row['lrn'] ?></p>
                                 <hr style="border: 2px solid black; opacity: 1;">
                                 <h5> <strong>Personal Information</strong></h5>
@@ -130,8 +185,8 @@
                                 <h5><strong>Father's Information</strong></h5>
                                 <p><strong>Name:</strong> <?= $row['flname'] ?>, <?= $row['ffname'] ?> <?= $row['fmi'] ?></p>
                                 <p><strong>Contact:</strong> <?= $row['contact_f'] ?></p>
-                                <h5><strong>Mother's Name</strong></h5>
                                 <hr style="border: 2px solid black; opacity: 1;">
+                                <h5><strong>Mother's Name</strong></h5>
                                 <p><strong>Name:</strong> <?= $row['mlname'] ?>, <?= $row['mfname'] ?> <?= $row['mmi'] ?></p>
                                 <p><strong>Contact:</strong> <?= $row['contact_m'] ?></p>
                                 <hr style="border: 2px solid black; opacity: 1;">
@@ -146,10 +201,10 @@
                     </div>
                 </div>
             </td> 
-            </tr>
-            <?php } ?>
-            <?php } ?>
-        </tbody>
+        </tr>
+        <?php } ?>
+    <?php } ?>
+</tbody>
     </table>
 </div>
 
@@ -159,5 +214,27 @@
 
 <?php
     }
-$con = null;
+$conn = null;
+?>
+        </div>
+    </div>
+    
+</div>
+
+<!-- End of Main Content -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-modal/2.2.6/js/bootstrap-modalmanager.min.js" integrity="sha512-/HL24m2nmyI2+ccX+dSHphAHqLw60Oj5sK8jf59VWtFWZi9vx7jzoxbZmcBeeTeCUc7z1mTs3LfyXGuBU32t+w==" crossorigin="anonymous"></script>
+<!-- responsive tags for screen compatibility -->
+<meta name="viewport" content="width=device-width, initial-scale=1 shrink-to-fit=no">
+<!-- custom css --> 
+<link href="../BarangaySystem/customcss/regiformstyle.css" rel="stylesheet" type="text/css">
+<!-- bootstrap css --> 
+<link href="../BarangaySystem/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"> 
+<!-- fontawesome icons -->
+<script src="https://kit.fontawesome.com/67a9b7069e.js" crossorigin="anonymous"></script>
+<script src="../BarangaySystem/bootstrap/js/bootstrap.bundle.js" type="text/javascript"> </script>
+
+<?php 
+    include('dashboard_sidebar_end.php');
 ?>

@@ -7,58 +7,73 @@
         //------------------------------------ RESIDENT CRUD FUNCTIONS ----------------------------------------
 
         public function create_resident() {
-            if(isset($_POST['add_resident'])) {
-                $email = $_POST['email'];
-                $password = ($_POST['password']);
-                $lname = $_POST['lname'];
-                $fname = $_POST['fname'];
-                $mi = $_POST['mi'];
-                $age = $_POST['age'];
-                $sex = $_POST['sex'];
-                $status = $_POST['status'];
-                $houseno = $_POST['houseno'];
-                $street = $_POST['street'];
-                $brgy = $_POST['brgy'];
-                $municipal = $_POST['municipal'];
-                $contact = $_POST['contact'];
-                $bdate = $_POST['bdate'];
-                $bplace = $_POST['bplace'];
-                $nationality = $_POST['nationality'];
+    if(isset($_POST['add_resident'])) {
+        // Use ?? '' to prevent "Undefined array key" errors
+        $login_identity = $_POST['login_identity'] ?? ''; 
+        $plain_password = $_POST['password'] ?? '';
+        $hashed_password = password_hash($plain_password, PASSWORD_DEFAULT);
 
-                $min_age = 18;
-                $max_age = 150;
-
-                if ($this->check_resident($email) == 0 ) {
-
-                    if(!in_array( $age, range( $min_age, $max_age) ) ){
-                        $message1 = "Sorry, you are still underaged to register an account";
-                        echo "<script type='text/javascript'>alert('$message1');</script>";
-                        return(0);
-                    }
+        $lname = $_POST['lname'] ?? '';
+        $fname = $_POST['fname'] ?? '';
+        $mi = $_POST['mi'] ?? '';
+        $age = $_POST['age'] ?? 0;
+        $sex = $_POST['sex'] ?? '';
+        $status = $_POST['status'] ?? '';
+        $houseno = $_POST['houseno'] ?? '';
+        $street = $_POST['street'] ?? '';
+        $brgy = $_POST['brgy'] ?? '';
+        $municipal = $_POST['municipal'] ?? '';
+        $contact = $_POST['contact'] ?? ''; 
+        $bdate = $_POST['bdate'] ?? '';
+        $bplace = $_POST['bplace'] ?? '';
+        $nationality = $_POST['nationality'] ?? '';
     
-                    else {
+        
+        
+        $addedby = $_POST['addedby'] ?? 'Resident';
 
-                        $connection = $this->openConn();
-                        $stmt = $connection->prepare("INSERT INTO tbl_resident ( `email`,`password`,`lname`,`fname`,
-                        `mi`, `age`, `sex`, `status`, `houseno`, `street`, `brgy`, `municipal`, `contact`, `bdate`, 
-                        `bplace`, `nationality`) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,? )");
-    
-                        $stmt->Execute([ $email, $password, $lname, $fname, $mi, $age, $sex, $status, 
-                        $houseno, $street, $brgy, $municipal, $contact, $bdate, $bplace, $nationality]);
+        // Logic for Email vs Phone
+        $email_to_save = NULL;
+        $phone_to_save = NULL;
 
-                        $message2 = "Account added, you can now continue logging in";
-                        echo "<script type='text/javascript'>alert('$message2');</script>";
-
-                        header("Refresh:0");
-                    }
-                }
-
-                else {
-                    echo "<script type='text/javascript'>alert('Email Account already exists');</script>";
-                }
-            }
+        if (filter_var($login_identity, FILTER_VALIDATE_EMAIL)) {
+            $email_to_save = $login_identity;
+        } else {
+            $phone_to_save = $login_identity;
         }
 
+        // Check if Identity exists
+        if ($this->check_resident($login_identity) == 0) {
+            if ($age < 18) {
+                echo "<script>alert('Sorry, you are underaged.');</script>";
+                return(0);
+            }
+
+            try {
+                $connection = $this->openConn();
+                $stmt = $connection->prepare("INSERT INTO tbl_resident (
+                    `email`, `phone_number`, `password`, `lname`, `fname`, `mi`, `age`, `sex`, 
+                    `status`, `houseno`, `street`, `brgy`, `municipal`, `contact`, `bdate`, 
+                    `bplace`, `nationality`, `addedby`
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+                $stmt->execute([ 
+                    $email_to_save, $phone_to_save, $hashed_password, 
+                    $lname, $fname, $mi, $age, $sex, $status, 
+                    $houseno, $street, $brgy, $municipal, $contact, 
+                    $bdate, $bplace, $nationality, $addedby
+                ]);
+
+                echo "<script>alert('Account added!'); window.location.href='index.php';</script>";
+            } catch (PDOException $e) {
+                // This will catch the "Column not found" error and tell you exactly what's wrong
+                echo "Database Error: " . $e->getMessage();
+            }
+        } else {
+            echo "<script>alert('Email or Phone Number already registered.');</script>";
+        }
+    }
+}
         public function view_resident(){
             $connection = $this->openConn();
             $stmt = $connection->prepare("SELECT * from tbl_resident");
@@ -193,17 +208,17 @@ header("refresh: 0");
         }
     }
 
-    public function count_male_resident() {
+    public function count_eleven_stem() {
         $connection = $this->openConn();
 
-        $stmt = $connection->prepare("SELECT COUNT(*) from tbl_resident where sex = 'male' ");
+        $stmt = $connection->prepare("SELECT COUNT(*) from tbl_eleven where course = 'STEM' ");
         $stmt->execute();
         $rescount = $stmt->fetchColumn();
 
         return $rescount;
     }
 
-    public function count_female_resident() {
+    public function count_eleven_abm() {
         $connection = $this->openConn();
 
         $stmt = $connection->prepare("SELECT COUNT(*) from tbl_resident where sex = 'female'");
@@ -213,15 +228,7 @@ header("refresh: 0");
         return $rescount;
     }
 
-    public function count_head_resident() {
-        $connection = $this->openConn();
-
-        $stmt = $connection->prepare("SELECT COUNT(*) from tbl_resident where family_role = 'Yes'");
-        $stmt->execute();
-        $rescount = $stmt->fetchColumn();
-
-        return $rescount;
-    }
+  
 
     public function count_member_resident() {
         $connection = $this->openConn();
@@ -361,32 +368,99 @@ header("refresh: 0");
         return $view;
     }
 
-    public function view_resident_male(){
+    public function view_eleven_stem(){
         $connection = $this->openConn();
-        $stmt = $connection->prepare("SELECT * from tbl_resident WHERE `sex` = 'Male'");
+        $stmt = $connection->prepare("SELECT * from tbl_eleven WHERE `course` = 'STEM'");
         $stmt->execute();
         $view = $stmt->fetchAll();
         return $view;
     }
 
-    public function view_resident_female(){
+    public function view_eleven_abm(){
         $connection = $this->openConn();
-        $stmt = $connection->prepare("SELECT * from tbl_resident WHERE `sex` = 'Female'");
+        $stmt = $connection->prepare("SELECT * from tbl_eleven WHERE `course` = 'ABM'");
         $stmt->execute();
         $view = $stmt->fetchAll();
         return $view;
     }
 
-    public function count_voters() {
+    public function view_eleven_gas(){
         $connection = $this->openConn();
-        $stmt = $connection->prepare("SELECT COUNT(*) from tbl_resident where `voter` = 'Yes' ");
+        $stmt = $connection->prepare("SELECT * from tbl_eleven WHERE `course` = 'GAS'");
         $stmt->execute();
-        $rescount = $stmt->fetchColumn();
-
-        return $rescount;
+        $view = $stmt->fetchAll();
+        return $view;
     }
 
+    public function view_eleven_ict(){
+        $connection = $this->openConn();
+        $stmt = $connection->prepare("SELECT * from tbl_eleven WHERE `course` = 'TVL-ICT'");
+        $stmt->execute();
+        $view = $stmt->fetchAll();
+        return $view;
+    }
 
+    public function view_eleven_he(){
+        $connection = $this->openConn();
+        $stmt = $connection->prepare("SELECT * from tbl_eleven WHERE `course` = 'TVL-HE'");
+        $stmt->execute();
+        $view = $stmt->fetchAll();
+        return $view;
+    }
+    public function view_twelve_stem(){
+        $connection = $this->openConn();
+        $stmt = $connection->prepare("SELECT * from tbl_twelve WHERE `course` = 'STEM'");
+        $stmt->execute();
+        $view = $stmt->fetchAll();
+        return $view;
+    }
+
+    public function view_twelve_abm(){
+        $connection = $this->openConn();
+        $stmt = $connection->prepare("SELECT * from tbl_twelve WHERE `course` = 'ABM'");
+        $stmt->execute();
+        $view = $stmt->fetchAll();
+        return $view;
+    }
+
+    public function view_twelve_gas(){
+        $connection = $this->openConn();
+        $stmt = $connection->prepare("SELECT * from tbl_twelve WHERE `course` = 'GAS'");
+        $stmt->execute();
+        $view = $stmt->fetchAll();
+        return $view;
+    }
+
+    public function view_twelve_ict(){
+        $connection = $this->openConn();
+        $stmt = $connection->prepare("SELECT * from tbl_twelve WHERE `course` = 'TVL-ICT'");
+        $stmt->execute();
+        $view = $stmt->fetchAll();
+        return $view;
+    }
+
+    public function view_twelve_he(){
+        $connection = $this->openConn();
+        $stmt = $connection->prepare("SELECT * from tbl_twelve WHERE `course` = 'TVL-HE'");
+        $stmt->execute();
+        $view = $stmt->fetchAll();
+        return $view;
+    }
+
+public function view_eleven($sort = 'lname', $order = 'ASC') {
+    // 1. Whitelist (Security check)
+    $allowed = ['lname', 'age', 'email', 'course', 'lrn'];
+    if (!in_array($sort, $allowed)) { $sort = 'lname'; }
+    
+    // 2. Validate Order
+    $order = ($order === 'DESC') ? 'DESC' : 'ASC';
+
+    $connection = $this->openConn();
+    // 3. Inject variables into the SQL
+    $stmt = $connection->prepare("SELECT * FROM tbl_eleven ORDER BY $sort $order");
+    $stmt->execute();
+    return $stmt->fetchAll();
+}
     
     
 

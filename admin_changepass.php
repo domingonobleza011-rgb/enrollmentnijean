@@ -2,18 +2,21 @@
 
     
     require('classes/main.class.php');
-    $bmis->admin_changepass();
-    $userdetails = $bmis->get_userdata();
+    $eusebia->admin_changepass();
+    $userdetails = $eusebia->get_userdata();
 
 ?>
 
+<?php 
+    include('dashboard_sidebar_start.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <link href="css/sb-admin-2.min.css" rel="stylesheet">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
+        <title>Change Password</title>
         
     </head>
     <body>
@@ -36,11 +39,13 @@
                     <input type="password" name="checkpassword" class="form-control" required>
                 </div>
 
-                <div class="text-center">
-                    <button type="submit" name="resident_changepass" class="btn btn-success px-4">
-                        Change Password
-                    </button>
-                </div>
+                <<div class="text-center">
+    <input type="hidden" name="id_admin" value="<?php echo $userdetails['id_admin']; ?>">
+    
+    <button type="submit" name="admin_changepass" class="btn btn-success px-4">
+        Change Password
+    </button>
+</div>
             </form>
         </div>
     </div> 

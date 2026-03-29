@@ -13,9 +13,7 @@
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
@@ -44,7 +42,6 @@
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
                 <a class="nav-link" href="admn_dashboard.php">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
 
@@ -55,35 +52,25 @@
                 Grade Level Enrollment
             </div>
 
-            <!-- Announcement Management -->
-            <li class="nav-item">
-                <a class="nav-link" href="admn_announcement_crud.php">
-                    <i class="fas fa-bullhorn"></i>
-                    <span>Announcements</span></a>
-            </li>
 
             <li class="nav-item">
                 <a class="nav-link" href="admn_seven.php">
-                    <i class="fas fa-seedling"></i>
                     <span>GRADE-7</span></a>
             </li>
 
             <!-- Certificate of Residency -->
             <li class="nav-item">
                 <a class="nav-link" href="admn_eight.php">
-                    <i class="fas fa-book-open"></i>
                     <span>GRADE-8</span></a>
             </li>
 
             <li class="nav-item">
                 <a class="nav-link" href="admn_nine.php">
-                    <i class="fas fa-pencil-alt"></i>
                     <span>GRADE-9 </span></a>
             </li>
 
             <li class="nav-item">
                 <a class="nav-link" href="admn_ten.php">
-                    <i class="fas fa-award"></i>
                     <span>GRADE-10</span></a>
             </li>
 
@@ -92,14 +79,12 @@
             <!-- Barangay Clearance -->
             <li class="nav-item">
                 <a class="nav-link" href="admn_eleven.php">
-                    <i class="fas fa-university"></i>
                     <span>GRADE-11</span></a>
             </li>
 
             <!-- Certificate of Indigency -->
             <li class="nav-item">
                 <a class="nav-link" href="admn_twelve.php">
-                    <i class="fas fa-user-graduate"></i>
                     <span>GRADE-12</span></a>
             </li>
             <!-- Divider -->

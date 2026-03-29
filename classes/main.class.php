@@ -39,45 +39,47 @@ class EUSEBIAClass {
         //authentication function para sa sa tatlong type ng accounts
 public function login() {
     if(isset($_POST['login'])) {
-        $email = $_POST['email'];
-        $password = $_POST['password'];
+        $identity = $_POST['login_identity']; 
+        $password_input = $_POST['password']; 
         $connection = $this->openConn();
 
-        // 1. Check Admin Table
-        $stmt = $connection->prepare("SELECT * FROM tbl_admin WHERE email = ? AND password = ?");
-        $stmt->execute([$email, $password]);
+        // 1. Check ADMIN - Only check EMAIL
+        // 1. Check ADMIN - Now checking BOTH Email and Phone
+$stmt = $connection->prepare("SELECT * FROM tbl_admin WHERE email = ? OR phone_number = ?");
+$stmt->execute([$identity, $identity]); // We pass the same input to both '?' placeholders
+$user = $stmt->fetch();
+
+if($user && password_verify($password_input, $user['password'])) {
+    $this->set_userdata($user);
+    header('Location: admn_dashboard.php');
+    exit(); 
+}
+
+        // 2. Check USER (Staff) - Only check EMAIL
+        $stmt = $connection->prepare("SELECT * FROM tbl_user WHERE email = ?");
+        $stmt->execute([$identity]);
         $user = $stmt->fetch();
 
-        if($user && $user['role'] == 'administrator') {
+        if($user && password_verify($password_input, $user['password'])) {
             $this->set_userdata($user);
-            header('Location: admn_dashboard.php');
-            exit(); // Use exit() instead of return(0) for headers
+            echo "<script>window.location.href='staff_dashboard.php';</script>";
+            exit(); 
         }
 
-        // 2. Check User Table (Staff)
-        $stmt = $connection->prepare("SELECT * FROM tbl_user WHERE email = ? AND password = ?");
-        $stmt->execute([$email, $password]);
+        // 3. Check RESIDENT - Check EMAIL OR PHONE_NUMBER
+        // We only use phone_number here because we are sure this table has it.
+        $stmt = $connection->prepare("SELECT * FROM tbl_resident WHERE email = ? OR phone_number = ?");
+        $stmt->execute([$identity, $identity]);
         $user = $stmt->fetch();
 
-        if($user && $user['role'] == 'user') {
+        if($user && password_verify($password_input, $user['password'])) {
             $this->set_userdata($user);
-            header('Location: staff_dashboard.php');
+            header('Location: resident_homepage.php');
             exit();
         }
 
-        // 3. Check Resident Table
-        $stmt = $connection->prepare("SELECT * FROM tbl_resident WHERE email = ? AND password = ?");
-        $stmt->execute([$email, $password]);
-        $user = $stmt->fetch();
-
-        if($user) { // If a row was found in tbl_resident
-    $this->set_userdata($user);
-    header('Location: resident_homepage.php');
-    exit();
-}
-
-        // 4. If all fail
-        echo "<script type='text/javascript'>alert('Invalid Email or Password');</script>";
+        // Only shows if NONE of the above found a match
+        echo "<script type='text/javascript'>alert('Invalid Credentials.');</script>";
     }
 }
 
@@ -148,215 +150,102 @@ public function get_userdata() {
 
 
  //----------------------------------------------------- ADMIN CRUD ---------------------------------------------------------
-    public function create_admin() {
-
-        if(isset($_POST['add_admin'])) {
+  public function create_admin() {
+    if(isset($_POST['add_admin'])) {
+        // 1. Use ?? '' to prevent warnings if the field is missing from HTML
+        $login_identity = $_POST['login_identity'] ?? ''; 
+        $password_input = $_POST['password'] ?? '';
         
-            $email = $_POST['email'];
-            $password = md5($_POST['password']);
-            $lname = $_POST['lname'];
-            $fname = $_POST['fname'];
-            $mi = $_POST['mi'];
-            $role = $_POST['role'];
-    
-                if ($this->check_admin($email) == 0 ) {
+        // Hash the password for security
+        $password = password_hash($password_input, PASSWORD_DEFAULT); 
         
-                    $connection = $this->openConn();
-                    $stmt = $connection->prepare("INSERT INTO tbl_admin (`email`,`password`,`lname`,`fname`,
-                    `mi`, `role` ) VALUES (?, ?, ?, ?, ?, ?)");
-                    
-                    $stmt->Execute([$email, $password, $lname, $fname, $mi, $role]);
-                    
-                    $message2 = "Administrator account added, you can now continue logging in";
-                    echo "<script type='text/javascript'>alert('$message2');</script>";
-                }
-            }
-    
-            else {
-                echo "<script type='text/javascript'>alert('Account already exists');</script>";
-            }
-    }
+        $lname = $_POST['lname'] ?? '';
+        $fname = $_POST['fname'] ?? '';
+        $mi = $_POST['mi'] ?? '';
+        $role = $_POST['role'] ?? 'Admin';
 
-    public function get_single_admin($id_admin){
+        // 2. Logic to separate Email from Phone
+        $email_to_save = NULL;
+        $phone_to_save = NULL;
 
-        $id_admin = $_GET['id_admin'];
-        
-        $connection = $this->openConn();
-        $stmt = $connection->prepare("SELECT * FROM tbl_admin where id_admin = ?");
-        $stmt->execute([$id_admin]);
-        $admin = $stmt->fetch();
-        $total = $stmt->rowCount();
-
-        if($total > 0 )  {
-            return $admin;
+        if (filter_var($login_identity, FILTER_VALIDATE_EMAIL)) {
+            $email_to_save = $login_identity;
+        } else {
+            $phone_to_save = $login_identity;
         }
-        else{
-            return false;
+
+        // 3. Validation: Make sure the identity isn't empty
+        if (empty($login_identity)) {
+            echo "<script>alert('Please provide an email or phone number.');</script>";
+            return;
         }
-    }
 
-    public function admin_changepass() {
-        $id_admin = $_GET['id_admin'];
-        $oldpassword = ($_POST['oldpassword']);
-        $oldpasswordverify = ($_POST['oldpasswordverify']);
-        $newpassword = ($_POST['newpassword']);
-        $checkpassword = $_POST['checkpassword'];
-
-        if(isset($_POST['admin_changepass'])) {
-
+        if ($this->check_admin($login_identity) == 0 ) {
             $connection = $this->openConn();
-            $stmt = $connection->prepare("SELECT `password` FROM tbl_admin WHERE id_admin = ?");
-            $stmt->execute([$id_admin]);
-            $result = $stmt->fetch();
-
-            if($result == 0) {
-                
-                echo "Old Password is Incorrect";
-            }
-
-            elseif ($oldpassword != $oldpasswordverify) {
-            }
-
-            elseif ($newpassword != $checkpassword){
-                echo "New Password and Verification Password does not Match";
-            }
-
-            else {
-                $connection = $this->openConn();
-                $stmt = $connection->prepare("UPDATE tbl_admin SET password =? WHERE id_admin = ?");
-                $stmt->execute([$newpassword, $id_admin]);
-                
-                $message2 = "Password Updated";
-                echo "<script type='text/javascript'>alert('$message2');</script>";
-                header("refresh: 0");
-            }
-
-
-        }
-    }
-
-
-
- //  ----------------------------------------------- ANNOUNCEMENT CRUD ---------------------------------------------------------
-
-
-    public function create_announcement() {
-        if(isset($_POST['create_announce'])) {
-            $id_announcement = $_POST['id_announcement'];
-            $event = $_POST['event'];
-            $start_date = $_POST['start_date'];
-            $addedby = $_POST['addedby'];
-
-            $connection = $this->openConn();
-            $stmt = $connection->prepare("INSERT INTO tbl_announcement (`id_announcement`, `event`, `start_date`, `addedby`, `status`) VALUES (?, ?, ?, ?, 'active')");
-$stmt->execute([$id_announcement, $event, $start_date, $addedby]);
-
-            $message2 = "Announcement Added";
-            echo "<script type='text/javascript'>alert('$message2');</script>";
-            header('refresh:0');
-        }
-
-        else {
-        }
-    }
-
-    public function view_announcement(){
-        $connection = $this->openConn();
-        $stmt = $connection->prepare("SELECT * from tbl_announcement");
-        $stmt->execute();
-        $view = $stmt->fetchAll();
-        return $view;
-    }
-
-    public function update_announcement() {
-        if (isset($_POST['update_announce'])) {
-            $id_announcement = $_GET['id_announcement'];
-            $event = $_POST['event'];
-            $start_date = $_POST['start_date'];
-            $end_date = $_POST['end_date'];
-            $addedby = $_POST['addedby'];
-
-            $connection = $this->openConn();
-            $stmt = $connection->prepare("UPDATE tbl_announcement SET event =?, start_date =?, 
-            end_date = ?, addedby =? WHERE id_announcement = ?");
-            $stmt->execute([ $event, $start_date, $end_date, $addedby, $id_announcement]);
-               
-            $message2 = "Announcement Updated";
-            echo "<script type='text/javascript'>alert('$message2');</script>";
-             header("refresh: 0");
-        }
-
-        else {
-        }
-    }
-public function admin_delete_announcement(){
-    if(isset($_POST['delete_announcement'])) {
-        $id_announcement = $_POST['id_announcement'];
-
-        // This is the correct way for your specific class:
-        $connection = $this->openConn(); 
-        
-        $stmt = $connection->prepare("DELETE FROM tbl_announcement WHERE id_announcement = ?");
-        $stmt->execute([$id_announcement]);
-
-        $current_page = basename($_SERVER['PHP_SELF']);
-        echo "<script>alert('Announcement permanently deleted'); window.location.href='$current_page';</script>";
-        exit();
-    }
-}
-public function delete_announcement($user_id){
-    if(isset($_POST['delete_announcement'])) {
-        $id_announcement = $_POST['id_announcement'];
-        
-        // Record the hide action for this specific user
-        $this->hide_announcement($user_id, $id_announcement);
-
-        // Get the current page name dynamically
-        $current_page = basename($_SERVER['PHP_SELF']);
-
-        echo "<script>
-                alert('Announcement Deleted'); 
-                window.location.href='$current_page';
-              </script>";
-        exit();
-    }
-}
-public function view_active_announcements($user_id){
-    $connection = $this->openConn();
-    
-    // This query selects all announcements EXCEPT those this specific user has hidden
-    $sql = "SELECT * FROM tbl_announcement 
-            WHERE id_announcement NOT IN (
-                SELECT announcement_id FROM tbl_hidden_announcements WHERE user_id = ?
-            ) AND status = 'active' 
-            ORDER BY start_date DESC";
+            // Ensure phone_number column exists in tbl_admin or remove it from the query
+            $stmt = $connection->prepare("INSERT INTO tbl_admin (`email`, `phone_number`, `password`, `lname`, `fname`, `mi`, `role`) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            $stmt->execute([$email_to_save, $phone_to_save, $password, $lname, $fname, $mi, $role]);
             
-    $stmt = $connection->prepare($sql);
-    $stmt->execute([$user_id]);
-    return $stmt->fetchAll();
-}
-
-    public function count_announcement() {
-        $connection = $this->openConn();
-        $stmt = $connection->prepare("SELECT COUNT(*) from tbl_announcement");
-        $stmt->execute();
-        $ancount = $stmt->fetchColumn();
-        return $ancount;
+            echo "<script>alert('Administrator account added'); window.location.href='add_admin.php';</script>";
+        } else {
+            echo "<script>alert('Account already exists');</script>";
+        }
     }
-
-   public function hide_announcement($user_id, $announcement_id) {
-    $connection = $this->openConn();
-    $stmt = $connection->prepare("INSERT INTO tbl_hidden_announcements (user_id, announcement_id) VALUES (?, ?)");
-    $stmt->execute([$user_id, $announcement_id]);
 }
 
-public function view_all_active_announcements(){
-    $connection = $this->openConn();
-    // Only fetch items that are NOT archived
-   $stmt = $connection->prepare("SELECT * FROM tbl_announcement WHERE status != 'archived'");
-    $stmt->execute();
-    return $stmt->fetchAll();
+   public function admin_changepass() {
+    if(isset($_POST['admin_changepass'])) {
+        
+        // 1. Capture the ID and password inputs
+        $id_admin = $_POST['id_admin'] ?? null;
+        $oldpassword = $_POST['oldpassword'] ?? '';
+        $newpassword = $_POST['newpassword'] ?? '';
+        $checkpassword = $_POST['checkpassword'] ?? '';
+
+        if (empty($id_admin)) {
+            echo "<script>alert('Error: Admin ID is missing. Please re-login.');</script>";
+            return;
+        }
+
+        $connection = $this->openConn();
+        
+        // 2. Fetch the current hashed password from the database
+        $stmt = $connection->prepare("SELECT `password` FROM tbl_admin WHERE id_admin = ?");
+        $stmt->execute([$id_admin]);
+        $result = $stmt->fetch();
+
+        if (!$result) {
+            echo "<script>alert('Admin user not found.');</script>";
+            return;
+        }
+
+        // 3. Verify Old Password (checks input against the Bcrypt hash)
+        if (!password_verify($oldpassword, $result['password'])) { 
+            echo "<script>alert('Old Password is Incorrect');</script>";
+        } 
+        // 4. Ensure New Password and Confirm Password match
+        elseif ($newpassword !== $checkpassword) {
+            echo "<script>alert('New Passwords do not match');</script>";
+        } 
+        // 5. Ensure the new password isn't empty
+        elseif (empty($newpassword)) {
+            echo "<script>alert('New password cannot be empty');</script>";
+        }
+        else {
+            // 6. Success: Hash the NEW password and update
+            $hashed_new = password_hash($newpassword, PASSWORD_DEFAULT);
+            $stmt = $connection->prepare("UPDATE tbl_admin SET password = ? WHERE id_admin = ?");
+            $stmt->execute([$hashed_new, $id_admin]);
+            
+            echo "<script type='text/javascript'>
+                alert('Password Updated Successfully'); 
+                window.location.href='admn_dashboard.php';
+            </script>";
+        }
+    }
 }
+
+
     public function check_admin($email) {
 
         $connection = $this->openConn();
@@ -1018,7 +907,6 @@ public function create_nine() {
 
         return $resident ?: false;
     }
-
     public function view_eleven(){ 
         $connection = $this->openConn();
         $stmt = $connection->prepare("SELECT * FROM tbl_eleven");

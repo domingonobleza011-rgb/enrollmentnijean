@@ -4,6 +4,7 @@
     include('classes/resident.class.php');
 
     $residenteusebia = new ResidentClass();
+
     
     // Fetching all 6 grades
    $g7  = $residenteusebia->count_by_grade('tbl_seven');
@@ -65,6 +66,11 @@
 
 .card-row-gap {
     margin-top: 3em;
+}
+.card:hover {
+    transform: translateY(-3px);
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
 }
 </style>
 
@@ -138,42 +144,78 @@
         </div>
     </div>
 
-    <div class="col-xl-4 col-lg-5">
+   <div class="col-xl-4 col-lg-5">
+
         <div class="row">
-            <?php 
+
+            <?php
+
             // Define your data in an array for a cleaner loop
+
             $course_cards = [
+
                 ['label' => 'STEM',    'count' => $stem_count, 'color' => 'primary', 'icon' => 'microscope'],
+
                 ['label' => 'ABM',     'count' => $abm_count,  'color' => 'success', 'icon' => 'calculator'],
+
                 ['label' => 'GAS',     'count' => $gas_count,  'color' => 'warning', 'icon' => 'book'],
+
                 ['label' => 'TVL-ICT', 'count' => $ict_count,  'color' => 'info',    'icon' => 'laptop-code'],
+
                 ['label' => 'TVL-HE',  'count' => $he_count,   'color' => 'danger',  'icon' => 'utensils']
+
             ];
 
-            foreach ($course_cards as $card): 
+
+
+            foreach ($course_cards as $card):
+
             ?>
+
             <div class="col-12 mb-4">
+
                 <div class="card border-left-<?= $card['color'] ?> shadow py-2">
+
                     <div class="card-body py-2">
+
                         <div class="row no-gutters align-items-center">
+
                             <div class="col mr-2">
+
                                 <div class="text-xs font-weight-bold text-<?= $card['color'] ?> text-uppercase mb-1">
+
                                     <?= $card['label'] ?> Students
+
                                 </div>
+
                                 <div class="h6 mb-0 font-weight-bold text-gray-800">
+
                                     <?= number_format($card['count']) ?>
+
                                 </div>
+
                             </div>
+
                             <div class="col-auto">
+
                                 <i class="fas fa-<?= $card['icon'] ?> fa-lg text-gray-300"></i>
+
                             </div>
+
                         </div>
+
                     </div>
+
                 </div>
+
             </div>
+
             <?php endforeach; ?>
+
         </div>
+
     </div>
+
 
 </div>
 </div
