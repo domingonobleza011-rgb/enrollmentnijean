@@ -400,13 +400,12 @@
                 </div>
             </div>
         </div>
-<hr style="background-color: black;">
+         <p style="text-align: center;"><strong>"It always seems impossible until it's done." <br>- Nelson Mandela</strong></p>
         <div id="down3"></div>
 
         <br>
-        <br>
-        <br>
 
+       
         <div class="container text-center">
             <div class="row">
                 <div class="col">
@@ -415,18 +414,15 @@
                 </div>
             </div>
 
-            <br>
-
             <div class="row">
                 <div class="col">
                     <i class="fas fa-id-card fa-7x"></i>
-
+                    
                     <br>
                     <br>
 
                     <h3>Step 1: Prepare</h3>
-                    <p>First step is to prepare all of the information that will be needed
-                    in acquiring a certificate of residency.</p>
+                    <p>Prepare all information for Grade 7 admission.</p>
                 </div>
 
                 <div class="col">
@@ -438,110 +434,28 @@
                     <h3>Step 2: Fill-Up</h3>
                     <p>Second step is to Fill-Up the entire form in our system.</p>
                 </div>
-
                 <div class="col">
-                    <i class="fas fa-user-check fa-7x"></i>
+                    <i class="fa fa-hourglass-half fa-7x fa-fw" style="color: #333;"></i>
 
                     <br>
                     <br>
 
-                    <h3>Step 3: Assessment</h3>
-                    <p>Third step is to verify all of the information you've been given
-                    in our system that we can use to make the information of your document
-                    accurately.</p>
+                    <h3>Step 3: Wait </h3>
+                    <p> Wait for announcement</p>
                 </div>
 
-                <div class="col">
-                    <i class="fas fa-file fa-7x"></i>
 
-                    <br>
-                    <br>
-
-                    <h3>Step 4: Release</h3>
-                    <p>Fourth step is for releasing of your Business/Mayor's Permit.</p>
-                </div>
             </div>
 
             <div id="down2"></div>
 
             <br>
-            <br>
-            <br>
-
-            <div class="row">
-                <div class="col">
-                    <h1>Other Details</h1>
-                    <hr style="background-color: black;">
-                </div>
-            </div>
-
-            <br> 
-
-            <div class="row text2">
-                <div class="col">
-                    <div class="card bg-primary card1">
-                        <div class="card-header">
-                            <h5> Eligibility <br><br> <i class="fas fa-user-check fa-2x"></i>  </h5>
-                        </div>
-                        <div class="card-body">
-                            <ul style="text-align: left; font-size: 16px;">
-                                <p class="card-text">
-                                    <li> A Philippines Resident. </li>
-                                </p>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card bg-primary card2">
-                        <div class="card-header">
-                            <h5> Validity <br><br> <i class="fas fa-clipboard-check fa-2x"></i>  </h5>
-                        </div>
-                        <div class="card-body">
-                            <ul style="text-align: left; font-size: 16px;">
-                                <p class="card-text">
-                                    <li> Your permit is valid for 1 year. </li>
-                                </p>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card bg-primary card3">
-                        <div class="card-header">
-                            <h5> Fees <br><br> <i class="fas fa-coins fa-2x"></i>  </h5>
-                        </div>
-                        <div class="card-body">
-                            <ul style="text-align: justify;">
-                                <p class="card-text">
-                                    <li> 100% Free </li>
-                                </p>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card bg-primary card4">
-                        <div class="card-header">
-                            <h5 style="font-size: 19.4px;"> Processing Time <br><br> <i class="fas fa-clock fa-2x"></i>  </h5>
-                        </div>
-                        <div class="card-body">
-                            <ul style="text-align: justify;">
-                                <p class="card-text">
-                                    <li>WorkingHours (8:00am - 5:00pm) </li>
-                                </p>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <div id="down1"></div>
 
         <br>
-        <br>
-        <br>
+
+
 
         <!-- Button trigger modal -->
 

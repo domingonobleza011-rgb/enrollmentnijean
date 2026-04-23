@@ -367,7 +367,6 @@ header("refresh: 0");
         $view = $stmt->fetchAll();
         return $view;
     }
-
     public function view_eleven_stem(){
         $connection = $this->openConn();
         $stmt = $connection->prepare("SELECT * from tbl_eleven WHERE `course` = 'STEM'");

@@ -66,9 +66,9 @@
             </div>
         </div>
 
-        <hr style="background-color: black;">
+ <p style="text-align: center;"><strong>"It always seems impossible until it's done." <br>- Nelson Mandela</strong></p>
         <div id="down3"></div>
-        <br><br><br>
+        <br><br>
 
         <div class="container text-center">
             <h1>Procedure</h1>
@@ -128,12 +128,11 @@
                                             <label><strong>Choose TLE Specialization (Course):</strong></label>
                                             <select name="course" class="form-control border-primary" required>
                                                 <option value="">-- Select Course --</option>
-                                                <option value="ICT - Computer Programming">ICT - Computer Programming</option>
-                                                <option value="ICT - Animation">ICT - Animation</option>
-                                                <option value="Home Economics - Cookery">Home Economics - Cookery</option>
-                                                <option value="Home Economics - Bread and Pastry">Home Economics - Bread and Pastry</option>
-                                                <option value="Industrial Arts - Automotive">Industrial Arts - Automotive</option>
-                                                <option value="Industrial Arts - Welding (SMAW)">Industrial Arts - Welding (SMAW)</option>
+                                                <option value="ICT">ICT - Computer Programming</option>
+                                                <option value="Animation">ICT - Animation</option>
+                                                <option value="BAP">Home Economics - Bread and Pastry</option>
+                                                <option value="Automotive">Industrial Arts - Automotive</option>
+                                                <option value="Welding">Industrial Arts - Welding (SMAW)</option>
                                             </select>
                                         </div>
                                     </div>

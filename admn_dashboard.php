@@ -129,8 +129,10 @@
         </div>
     </div>
     <br>
+
+    <h1>Senior High Course Monitoring</h1>
+    <BR></BR>
     <div class="row">
-    
     <div class="col-xl-8 col-lg-7">
         <div class="card shadow mb-4">
             <div class="card-header py-3">

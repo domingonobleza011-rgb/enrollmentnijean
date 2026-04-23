@@ -66,9 +66,9 @@
             </div>
         </div>
 
-        <hr style="background-color: black;">
+ <p style="text-align: center;"><strong>"It always seems impossible until it's done." <br>- Nelson Mandela</strong></p>
         <div id="down3"></div>
-        <br><br><br>
+        <br><br>
 
         <div class="container text-center">
             <h1>Procedure</h1>

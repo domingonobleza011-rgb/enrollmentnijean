@@ -404,8 +404,6 @@
         <div id="down3"></div>
 
         <br>
-        <br>
-        <br>
 
         <div class="container text-center">
             <div class="row">
@@ -414,8 +412,6 @@
                     <hr style="background-color: black;">
                 </div>
             </div>
-
-            <br>
 
             <div class="row">
                 <div class="col">
@@ -456,81 +452,8 @@
             <br>
             <br>
 
-            <div class="row">
-                <div class="col">
-                    <h1>Other Details</h1>
-                    <hr style="background-color: black;">
-                </div>
-            </div>
-
-            <br> 
-
-            <div class="row text2">
-                <div class="col">
-                    <div class="card bg-primary card1">
-                        <div class="card-header">
-                            <h5> Eligibility <br><br> <i class="fas fa-user-check fa-2x"></i>  </h5>
-                        </div>
-                        <div class="card-body">
-                            <ul style="text-align: left; font-size: 16px;">
-                                <p class="card-text">
-                                    <li> A Philippines Resident. </li>
-                                </p>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card bg-primary card2">
-                        <div class="card-header">
-                            <h5> Validity <br><br> <i class="fas fa-clipboard-check fa-2x"></i>  </h5>
-                        </div>
-                        <div class="card-body">
-                            <ul style="text-align: left; font-size: 16px;">
-                                <p class="card-text">
-                                    <li> Your permit is valid for 1 year. </li>
-                                </p>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card bg-primary card3">
-                        <div class="card-header">
-                            <h5> Fees <br><br> <i class="fas fa-coins fa-2x"></i>  </h5>
-                        </div>
-                        <div class="card-body">
-                            <ul style="text-align: justify;">
-                                <p class="card-text">
-                                    <li> 100% Free </li>
-                                </p>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card bg-primary card4">
-                        <div class="card-header">
-                            <h5 style="font-size: 19.4px;"> Processing Time <br><br> <i class="fas fa-clock fa-2x"></i>  </h5>
-                        </div>
-                        <div class="card-body">
-                            <ul style="text-align: justify;">
-                                <p class="card-text">
-                                    <li>WorkingHours (8:00am - 5:00pm) </li>
-                                </p>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+            
         <div id="down1"></div>
-
-        <br>
-        <br>
-        <br>
-
         <!-- Button trigger modal -->
 
         <div class="container">
