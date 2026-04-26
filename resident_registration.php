@@ -9,23 +9,77 @@
 <!DOCTYPE html> 
 <html> 
     <head> 
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"> 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Serif+4:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/67a9b7069e.js" crossorigin="anonymous"></script>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     </head>
 
     <style>
-        
+            :root {
+      --navy-dark:    #0a2e5c;
+      --navy-mid:     #103f80;
+      --navy-light:   #1a5ca8;
+      --gold:         #ffd700;
+      --gold-soft:    rgba(255, 215, 0, 0.75);
+      --white:        #ffffff;
+      --bg:           #f7f8fc;
+      --card-bg:      #ffffff;
+      --border:       rgba(10, 46, 92, 0.12);
+      --text-primary: #1a1e2e;
+      --text-muted:   #5a6478;
+      --blue-light:   #e6f1fb;
+      --green-light:  #eaf3de;
+      --purple-light: #eeedfe;
+      --blue-accent:  #185fa5;
+      --green-accent: #3b6d11;
+      --purple-accent:#534ab7;
+    }
+
+            .navbar {
+      background: rgba(10, 46, 92, 0.97);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 215, 0, 0.15);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
         .field-icon {
         margin-left: 74%;
         margin-top: -8%;
         position: absolute;
         z-index: 2;
         }
+    footer {
+      background: var(--navy-dark);
+      text-align: center;
+      padding: 1.2rem 1.5rem;
+    }
+
+    footer p {
+      color: var(--gold-soft);
+      font-size: 12.5px;
+      font-weight: 300;
+      letter-spacing: 0.07em;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 500px) {
+      .school-name  { font-size: 20px; }
+      .values-grid  { grid-template-columns: 1fr; }
+      .card-header  { padding: 1rem 1.1rem; }
+      .card-body    { padding: 1rem 1.1rem 1.2rem; }
+    }
     </style>
     
     <body >
 
         <!-- eto yung navbar -->
-        <nav class="navbar navbar-dark bg-primary sticky-top">
+        <nav class="navbar">
             <a class="navbar-brand" style="color: white;">EUSEBIA PAZ ARROYO NATIONAL HIGH SCHOOL</a>
         </nav>
 
@@ -226,7 +280,7 @@
                                 <br>
                                  <div class="d-flex justify-content-end align-items-center">   
                                 <input type="hidden" class="form-control" name="role" value="resident">
-                                <a style="width: 130px; margin-left:35%;" class="btn btn-danger" href="index.php"> Back to Login</a>
+                                <a style="width: 130px; margin-left:35%;" class="btn btn-danger" href="login.php"> Back to Login</a>
                                 <button style="width: 130px;" class="btn btn-primary" type="submit" name="add_resident"> Submit </button>
                                 
                             </form>
@@ -260,7 +314,6 @@
         </div>
     </div>
 </div>
-
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -278,5 +331,8 @@
 
         <script src="../BarangaySystem/bootstrap/js/bootstrap.bundle.js" type="text/javascript"> </script>
     </body>
+     <footer>
+    <p>Eusebia Paz Arroyo National High School &middot; Department of Education</p>
+  </footer>
 </html>
 

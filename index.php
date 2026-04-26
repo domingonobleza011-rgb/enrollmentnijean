@@ -137,7 +137,7 @@
       font-size: 13.5px;
       font-weight: 400;
       color: var(--navy-dark);
-      background: var(--gold);
+      background: var(--gold-soft);
       border: 1px solid var(--gold);
       border-radius: 8px;
       padding: 0.42rem 1.1rem;
@@ -150,8 +150,8 @@
     }
 
     .btn-register:hover {
-      background: #ffe033;
-      border-color: #ffe033;
+      background: #f5f3eb;
+      border-color: #f8f7ef;
     }
 
     .btn-icon {
@@ -397,20 +397,26 @@
       margin-top: 2px;
     }
 
-    .card-body {
-      padding: 1.3rem 1.5rem 1.5rem;
-    }
+.card-body {
+  padding: 1.3rem 1.5rem 1.5rem;
+  /* Ensures smooth text rendering */
+  -webkit-font-smoothing: antialiased;
+}
 
-    .card-body p {
-      font-size: 15.5px;
-      line-height: 1.8;
-      color: var(--text-primary);
-      font-weight: 300;
-    }
+.card-body p {
+  /* Using a modern system stack for better performance and look */
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 1rem; /* Slightly larger (16px) for better accessibility */
+  line-height: 1.6; /* Reduced slightly from 1.8 for tighter, more cohesive paragraphs */
+  color: var(--text-primary);
+  font-weight: 400; /* Standard weight is usually more readable than 300 */
+  margin-bottom: 1rem;
+}
 
-    .card-body strong {
-      font-weight: 500;
-    }
+.card-body strong {
+  font-weight: 600; /* Increased to 600 to provide better contrast against 400 */
+  color: var(--text-highlight, inherit); 
+}
 
     /* ── VALUES GRID ── */
     .values-grid {
@@ -471,6 +477,13 @@
       .card-header  { padding: 1rem 1.1rem; }
       .card-body    { padding: 1rem 1.1rem 1.2rem; }
     }
+     .login-logo {
+    background-color: rgba(255, 255, 255, 0.9); /* Soft white circle */
+    padding: 10px;
+    border-radius: 50%; /* Keeps it circular like the seal */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+filter: saturate(1.2) brightness(1.1);
   </style>
 </head>
 <body>
@@ -480,7 +493,9 @@
     <div class="navbar-inner">
 
       <a href="#" class="navbar-brand">
-        <div class="navbar-logo">🏫</div>
+        <div class="navbar-logo">
+          <img src="icons/eusebia.png" alt="Logo" style="width: 18px; height: 18px;">
+        </div>
         <div class="navbar-title">
           EPAMNHS
           <span>DASHBOARD</span>
@@ -551,7 +566,7 @@
 
     <div class="hero-content">
       <div class="seal-ring">
-        <div class="seal-inner">🏫</div>
+        <img src="icons/eusebia.png" class="login-logo" alt="Logo">
       </div>
       <h1 class="school-name">Eusebia Paz Arroyo National High School</h1>
       <p class="school-sub">DepEd &middot; Republic of the Philippines</p>
@@ -581,7 +596,16 @@
           </div>
         </div>
         <div class="card-body">
-          <p>We dream of a future where every Filipino learner becomes a <strong>holistically developed individual</strong> who possesses the knowledge, skills, and values necessary to thrive in a rapidly changing world—contributing meaningfully to the community, nation, and global society.</p>
+          <p>We dream of Filipinos 
+who passionately love their country 
+and whose values and competencies  
+enable them to realize their full potential 
+and contribute meaningfully to building the nation.
+<br>
+As a learner-centered public institution, 
+the Department of Education 
+continuously improves itself 
+to better serve its stakeholders</p>
         </div>
       </article>
 
@@ -601,7 +625,14 @@
           </div>
         </div>
         <div class="card-body">
-          <p>To protect and promote the right of every Filipino to quality, equitable, culturally-responsive, and complete basic education. We shall deliver a <strong>learner-centered education</strong> that develops every student's potential through academic excellence, character formation, and 21st-century competencies—preparing them to be productive, responsible, and globally competitive citizens.</p>
+          <p>To protect and promote the right of every Filipino to quality, equitable, culture-based, and complete basic education where: <br>
+-Students learn in a child-friendly, gender-sensitive, safe, and motivating environment.
+<br>
+-Teachers facilitate learning and constantly nurture every learner.
+<br>
+-Administrators and staff, as stewards of the institution, ensure an enabling and supportive environment for effective learning to happen.
+<br>
+-Family, community, and other stakeholders are actively engaged and share responsibility for developing life-long learners.</p>
         </div>
       </article>
 
@@ -647,7 +678,7 @@
 
   <!-- FOOTER -->
   <footer>
-    <p>Eusebia Paz Arroyo National High School &middot; Department of Education &middot; Republic of the Philippines</p>
+    <p>Eusebia Paz Arroyo National High School &middot; Department of Education</p>
   </footer>
   <script>
     const btn = document.getElementById('hamburgerBtn');

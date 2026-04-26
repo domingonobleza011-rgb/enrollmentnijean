@@ -556,7 +556,7 @@
                                 <input name="contact" type="number" class="form-control" required>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-8">
                             <div class="form-group">
                                 <label>Email:</label>
                                 <input name="email" type="text" class="form-control" required>
@@ -568,13 +568,13 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Current Address:</label>
-                                <textarea name="current_address" class="form-control" rows="2" required></textarea>
+                                <textarea name="current_address" class="form-control" rows="1" required></textarea>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Permanent Address:</label>
-                                <textarea name="perm_address" class="form-control" rows="2" required></textarea>
+                                <textarea name="perm_address" class="form-control" rows="1" required></textarea>
                             </div>
                         </div>
                     </div>
@@ -598,25 +598,30 @@
                         </div>
                     </div>
                     <hr>
-                    <h6>Parent's / Guardian's Information:</h6>
+
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-8">
                             <label>Last Grade Level Completed</label>
                             <input name="lglc" type="text" class="form-control" required>
+                        </div>
+                        <div class="col-md-4">
                             <label>Last School Attended</label>
-                            <input name="lsa" type="text" class="form-control mt-1" required>
+                            <input name="lsa" type="text" class="form-control" required>
                         </div>
                     </div>
                     <br>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-8">
                             <label>Last School Year Completed</label>
                             <input name="lysc" type="text" class="form-control mt-1" required>
+                        </div>
+                        <div class="col-md-4">
                             <label>School Id</label>
                             <input name="school_id" type="text" class="form-control mt-1" required>
                         </div>
                     </div>
-            </div> <div class="modal-footer">
+            </div> 
+            <div class="modal-footer">
                 <input name="id_resident" type="hidden" value="<?= $userdetails['id_resident'] ?? ''; ?>">
                 <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
                 <button name="create_seven" type="submit" class="btn btn-primary">Submit Enrollment</button>
